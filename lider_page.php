@@ -196,7 +196,8 @@ $name = $_SESSION['user_number'];
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
                 <a class="nav-link" href="profile.php">
-                    <i class="bi bi-speedometer2 ms-2"></i>
+                <i class="bi bi-person-circle"> </i>
+
                     الملف الشخصي
                 </a>
             </li>
