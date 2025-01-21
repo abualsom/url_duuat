@@ -237,40 +237,71 @@ $name = $_SESSION['user_number'];
         </ul>
     </div>
     <form action="" method="post">
-        <div>
-            <label for="url_name">عنوان الرابط:</label>
-            <input type="text" id="url_name" name="url_name" required>
+<!-- Form Card -->
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="text-center mb-0" style="color: #2c3e50;">إضافة رابط جديد</h4>
         </div>
-        <div>
-            <label for="url"> الرابط:</label>
-            <input type="url" id="url" name="url" required>
+        <div class="card-body">
+            <form action="" method="post" class="needs-validation" novalidate>
+                <div class="row">
+                    <!-- URL Name Field -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="url_name" class="form-label fw-bold" style="color: #2c3e50;">عنوان الرابط:</label>
+                            <input type="text" class="form-control" id="url_name" name="url_name" required>
+                        </div>
+                    </div>
+                    
+                    <!-- URL Field -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="url" class="form-label fw-bold" style="color: #2c3e50;">الرابط:</label>
+                            <input type="url" class="form-control" id="url" name="url" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Admin Selection -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="url_admin" class="form-label fw-bold" style="color: #2c3e50;">المشرف:</label>
+                            <select class="form-select select2" id="url_admin" name="url_admin" required>
+                                <option value="" disabled selected>اختر مشرف</option>
+                                <?php
+                                if ($rows_1->num_rows > 0) {
+                                    while ($row_1 = $rows_1->fetch_assoc()) {
+                                        echo '<option value="' . $row_1['location_name'] . '">' . $row_1['location_name'] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>لم تقوموا بإضافة أي مشرف</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Notes Field -->
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="note" class="form-label fw-bold" style="color: #2c3e50;">ملاحظات:</label>
+                            <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                    <button type="submit" name="submit" class="btn btn-lg px-5" 
+                            style="background-color: #2c3e50; color: white;">
+                        إضافة البيانات
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="url_admin">المشرف:</label>
-            <select class="form-control select2" id="url_admin" name="url_admin" required>
-                <option value="" disabled selected>اختر مشرف</option>
-                <?php
-                if ($rows_1->num_rows > 0) {
-                    while ($row_1 = $rows_1->fetch_assoc()) {
-                        echo '<option value="' . $row_1['location_name'] . '">' . $row_1['location_name'] . '</option>';
-                    }
-                } else {
-                    echo '<option value="" disabled>لم تقوموا بإضافة أي مشرف  </option>';
-                }
-                ?>
-            </select>
-        </div>
-        <div>
-            <label for="note">ملاحظات:</label>
-            <textarea id="note" name="note"></textarea>
-        </div>
-        <div class="d-flex justify-content-center">
-        <input
-          class="button btn btn-success"
-          type="submit"
-          name="submit"
-          value="إضافة البيانات" />
-      </div>
+    </div>
+</div>
+
 
 
     </form>
