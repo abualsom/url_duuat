@@ -142,6 +142,11 @@ $name = $_SESSION['user_number'];
             top: 15px;
             z-index: 1100;
         }
+<<<<<<< Updated upstream
+=======
+        
+
+>>>>>>> Stashed changes
         .serch:hover{
             background-color:antiquewhite;
             color:  rgba(145, 34, 34, 0.1);
@@ -348,7 +353,7 @@ $name = $_SESSION['user_number'];
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                             <a href="" class="a_icon btn btn-success btn-sm" title="نسخ">
-                                                <i class="bi bi-clipboard"></i>
+                                                <i class="bi bi-clipboard" id="copyButton" onclick="copyButtonText(this)"> </i>
                                             </a>
                                             <a href="" class="a_icon btn btn-info btn-sm" title="فتح">
                                                 <i class="bi bi-box-arrow-up-right"></i>
@@ -379,6 +384,21 @@ $name = $_SESSION['user_number'];
                 toggleButton.style.right = '290px';
             }
         });
+        function copyButtonText(button) {
+            // نسخ النص الموجود في الزر
+            const textToCopy = button.innerText;
+
+            // إنشاء كائن مؤقت لنقل النص إلى الحافظة
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    // عرض رسالة تأكيد
+                    const messageDiv = document.getElementById('message');
+                    messageDiv.innerText = "تم نسخ النص إلى الحافظة!";
+                })
+                .catch((err) => {
+                    console.error('فشل النسخ:', err);
+                });
+        }
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
