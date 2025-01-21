@@ -142,9 +142,6 @@ $name = $_SESSION['user_number'];
             top: 15px;
             z-index: 1100;
         }
-        .serch{
-           
-        }
         .serch:hover{
             background-color:antiquewhite;
             color:  rgba(145, 34, 34, 0.1);
