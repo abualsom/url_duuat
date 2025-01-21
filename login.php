@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 <?php
 
+=======
+
+<?php
+>>>>>>> cb3a8499df0878b579bf1c958d3d2a06747305bd
 include('conn.php');
 session_start();
 

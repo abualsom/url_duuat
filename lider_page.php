@@ -233,7 +233,44 @@ $name = $_SESSION['user_number'];
             </li>
         </ul>
     </div>
+    <form action="" method="post">
+        <div>
+            <label for="url">عنوان الرابط:</label>
+            <input type="text" id="url" name="url" required>
+        </div>
+        <div>
+            <label for="url"> الرابط:</label>
+            <input type="url" id="url" name="url" required>
+        </div>
+        <div class="form-group">
+            <label for="location">المشرف:</label>
+            <select class="form-control select2" id="location" name="location" required>
+                <option value="" disabled selected>اختر مشرف</option>
+                <?php
+                if ($rows_1->num_rows > 0) {
+                    while ($row_1 = $rows_1->fetch_assoc()) {
+                        echo '<option value="' . $row_1['location_name'] . '">' . $row_1['location_name'] . '</option>';
+                    }
+                } else {
+                    echo '<option value="" disabled>لم تقوموا بإضافة أي مشرف  </option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div>
+            <label for="note">ملاحظات:</label>
+            <textarea id="note" name="note"></textarea>
+        </div>
+        <div class="d-flex justify-content-center">
+        <input
+          class="button btn btn-success"
+          type="submit"
+          name="submit"
+          value="إضافة البيانات" />
+      </div>
 
+
+    </form>
     <!-- Main Content -->
     <div class="main-content">
         <div class="container-fluid mt-4">
