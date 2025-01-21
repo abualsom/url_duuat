@@ -142,6 +142,22 @@ $name = $_SESSION['user_number'];
             top: 15px;
             z-index: 1100;
         }
+        .serch{
+           
+        }
+        .serch:hover{
+            background-color:antiquewhite;
+            color:  rgba(145, 34, 34, 0.1);
+            box-shadow: 0 2px 4px rgba(167, 188, 243, 0.1);
+            transition: all 0.3s ease;
+        }
+
+       
+            
+        
+
+        
+        
     </style>
 
 </head>
@@ -281,10 +297,31 @@ $name = $_SESSION['user_number'];
                 </div>
             </div>
         </div>
-
-
-
     </form>
+
+    <div class="container my-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- Navbar داخل بطاقة -->
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarScroll">
+                            
+                            <form class="d-flex" role="search">
+                                <input class="serch form-control me-4" type="search" placeholder="بحث" aria-label="بحث">
+                                <button class="btn btn-outline-success" type="submit">بحث</button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    
     <!-- Main Content -->
     <div class="main-content">
         <div class="container-fluid mt-4">
