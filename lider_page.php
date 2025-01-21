@@ -21,11 +21,17 @@ $name = $_SESSION['user_number'];
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet" />
 
     <style>
-        body{
+        body {
             font-family: 'Noto Kufi Arabic', serif;
         }
+
         :root {
             --sidebar-width: 280px;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --hover-color: aqua;
+            --text-color: white;
+            --border-color: #ddd;
         }
 
         .sidebar {
@@ -34,8 +40,8 @@ $name = $_SESSION['user_number'];
             position: fixed;
             right: -280px;
             top: 0;
-            background: #2c3e50;
-            color: white;
+            background: var(--primary-color);
+            color: var(--text-color);
             z-index: 1000;
             transition: all 0.3s ease-in-out;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -50,13 +56,13 @@ $name = $_SESSION['user_number'];
         }
 
         .navbar {
-            background-color: #2c3e50 !important;
+            background-color: var(--primary-color) !important;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: white;
+            color: var(--text-color);
         }
 
         .user-profile {
-            background-color: #2c3e50;
+            background-color: var(--primary-color);
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -66,66 +72,19 @@ $name = $_SESSION['user_number'];
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: #3498db;
+            background: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: white;
+            color: var(--text-color);
             margin: 0 auto 15px;
         }
 
         .table th,
         .table td {
-            border-left: 1px solid #ddd;
+            border-left: 1px solid var(--border-color);
             text-align: center;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        #toggle-sidebar {
-            position: fixed;
-            right: 10px;
-            top: 15px;
-            z-index: 1100;
-        }
-
-        .table th,
-        .table td {
-            text-align: center;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
         }
 
         .table th:last-child,
@@ -134,12 +93,8 @@ $name = $_SESSION['user_number'];
         }
 
         th {
-            background-color: #2c3e50 !important;
-            color: white !important;
-        }
-
-        .btn-group button {
-            margin: 0 5px;
+            background-color: var(--primary-color) !important;
+            color: var(--text-color) !important;
         }
 
         th:last-child,
@@ -153,17 +108,42 @@ $name = $_SESSION['user_number'];
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
         }
+
+        .btn-group button {
+            margin: 0 5px;
+        }
+
         .nav-link {
             color: #ddd;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
         .nav-link:hover {
-            color: aqua;
+            color: var(--hover-color);
+            background: rgba(255, 255, 255, 0.1);
         }
+
+        .nav-link.active {
+            color: var(--text-color);
+            background: var(--secondary-color);
+        }
+
         .a_icon {
             margin: 5px;
         }
+
+        #toggle-sidebar {
+            position: fixed;
+            right: 10px;
+            top: 15px;
+            z-index: 1100;
+        }
     </style>
+
 </head>
 
 <body>
@@ -199,9 +179,9 @@ $name = $_SESSION['user_number'];
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link active" href="profile.php">
+                <a class="nav-link" href="profile.php">
                     <i class="bi bi-speedometer2 ms-2"></i>
-                     الملف الشخصي 
+                    الملف الشخصي
                 </a>
             </li>
             <li class="nav-item">
@@ -213,94 +193,94 @@ $name = $_SESSION['user_number'];
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="bi bi-link-45deg ms-2"></i>
-                كافة الروابط  
+                    كافة الروابط
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="bi bi-link-45deg ms-2"></i>
-                    إضافة الروابط الخاصة 
+                    إضافة الروابط الخاصة
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="bi bi-link-45deg ms-2"></i>
-                    إضافة الروابط العامة 
+                    إضافة الروابط العامة
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">
-                <i class="bi bi-door-open-fill me-1"></i>
+                    <i class="bi bi-door-open-fill me-1"></i>
                     تسجيل الخروج
                 </a>
             </li>
         </ul>
     </div>
     <form action="" method="post">
-<!-- Form Card -->
-<div class="container my-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-white">
-            <h4 class="text-center mb-0" style="color: #2c3e50;">إضافة رابط جديد</h4>
-        </div>
-        <div class="card-body">
-            <form action="" method="post" class="needs-validation" novalidate>
-                <div class="row">
-                    <!-- URL Name Field -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="url_name" class="form-label fw-bold" style="color: #2c3e50;">عنوان الرابط:</label>
-                            <input type="text" class="form-control" id="url_name" name="url_name" required>
-                        </div>
-                    </div>
-                    
-                    <!-- URL Field -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="url" class="form-label fw-bold" style="color: #2c3e50;">الرابط:</label>
-                            <input type="url" class="form-control" id="url" name="url" required>
-                        </div>
-                    </div>
-                    
-                    <!-- Admin Selection -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="url_admin" class="form-label fw-bold" style="color: #2c3e50;">المشرف:</label>
-                            <select class="form-select select2" id="url_admin" name="url_admin" required>
-                                <option value="" disabled selected>اختر مشرف</option>
-                                <?php
-                                if ($rows_1->num_rows > 0) {
-                                    while ($row_1 = $rows_1->fetch_assoc()) {
-                                        echo '<option value="' . $row_1['location_name'] . '">' . $row_1['location_name'] . '</option>';
-                                    }
-                                } else {
-                                    echo '<option value="" disabled>لم تقوموا بإضافة أي مشرف</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- Notes Field -->
-                    <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <label for="note" class="form-label fw-bold" style="color: #2c3e50;">ملاحظات:</label>
-                            <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                        </div>
-                    </div>
+        <!-- Form Card -->
+        <div class="container my-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h4 class="text-center mb-0" style="color: #2c3e50;">إضافة رابط جديد</h4>
                 </div>
-                
-                <!-- Submit Button -->
-                <div class="text-center mt-4">
-                    <button type="submit" name="submit" class="btn btn-lg px-5" 
-                            style="background-color: #2c3e50; color: white;">
-                        إضافة البيانات
-                    </button>
+                <div class="card-body">
+                    <form action="" method="post" class="needs-validation" novalidate>
+                        <div class="row">
+                            <!-- URL Name Field -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="url_name" class="form-label fw-bold" style="color: #2c3e50;">عنوان الرابط:</label>
+                                    <input type="text" class="form-control" id="url_name" name="url_name" required>
+                                </div>
+                            </div>
+
+                            <!-- URL Field -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="url" class="form-label fw-bold" style="color: #2c3e50;">الرابط:</label>
+                                    <input type="url" class="form-control" id="url" name="url" required>
+                                </div>
+                            </div>
+
+                            <!-- Admin Selection -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="url_admin" class="form-label fw-bold" style="color: #2c3e50;">المشرف:</label>
+                                    <select class="form-select select2" id="url_admin" name="url_admin" required>
+                                        <option value="" disabled selected>اختر مشرف</option>
+                                        <?php
+                                        if ($rows_1->num_rows > 0) {
+                                            while ($row_1 = $rows_1->fetch_assoc()) {
+                                                echo '<option value="' . $row_1['location_name'] . '">' . $row_1['location_name'] . '</option>';
+                                            }
+                                        } else {
+                                            echo '<option value="" disabled>لم تقوموا بإضافة أي مشرف</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Notes Field -->
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="note" class="form-label fw-bold" style="color: #2c3e50;">ملاحظات:</label>
+                                    <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-4">
+                            <button type="submit" name="submit" class="btn btn-lg px-5"
+                                style="background-color: #2c3e50; color: white;">
+                                إضافة البيانات
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
 
 
@@ -338,7 +318,7 @@ $name = $_SESSION['user_number'];
                                             <a href="" class="a_icon btn btn-info btn-sm" title="فتح">
                                                 <i class="bi bi-box-arrow-up-right"></i>
                                             </a>
-                                            
+
                                         </div>
                                     </td>
                                     <td>ملاحظة تجريبية</td>
