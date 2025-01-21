@@ -1,4 +1,12 @@
 <?php
+
+echo "dfe";
+
+?>
+
+
+
+<?php
 include('conn.php');
 session_start();
 
