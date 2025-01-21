@@ -160,6 +160,9 @@ $name = $_SESSION['user_number'];
         .nav-link:hover {
             color: aqua;
         }
+        .a_icon {
+            margin: 5px;
+        }
     </style>
 </head>
 
@@ -235,16 +238,16 @@ $name = $_SESSION['user_number'];
     </div>
     <form action="" method="post">
         <div>
-            <label for="url">عنوان الرابط:</label>
-            <input type="text" id="url" name="url" required>
+            <label for="url_name">عنوان الرابط:</label>
+            <input type="text" id="url_name" name="url_name" required>
         </div>
         <div>
             <label for="url"> الرابط:</label>
             <input type="url" id="url" name="url" required>
         </div>
         <div class="form-group">
-            <label for="location">المشرف:</label>
-            <select class="form-control select2" id="location" name="location" required>
+            <label for="url_admin">المشرف:</label>
+            <select class="form-control select2" id="url_admin" name="url_admin" required>
                 <option value="" disabled selected>اختر مشرف</option>
                 <?php
                 if ($rows_1->num_rows > 0) {
@@ -292,18 +295,19 @@ $name = $_SESSION['user_number'];
                                     <td>https://example.com</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn btn-danger btn-sm" title="حذف">
+                                            <a href="" class="a_icon btn btn-danger btn-sm" title="حذف">
                                                 <i class="bi bi-trash"></i>
-                                            </button>
-                                            <button class="btn btn-primary btn-sm" title="تعديل">
+                                            </a>
+                                            <a href="lider_edit.php" class="a_icon btn btn-primary btn-sm" title="تعديل">
                                                 <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-success btn-sm" title="نسخ">
+                                            </a>
+                                            <a href="" class="a_icon btn btn-success btn-sm" title="نسخ">
                                                 <i class="bi bi-clipboard"></i>
-                                            </button>
-                                            <button class="btn btn-info btn-sm" title="فتح">
+                                            </a>
+                                            <a href="" class="a_icon btn btn-info btn-sm" title="فتح">
                                                 <i class="bi bi-box-arrow-up-right"></i>
-                                            </button>
+                                            </a>
+                                            
                                         </div>
                                     </td>
                                     <td>ملاحظة تجريبية</td>
