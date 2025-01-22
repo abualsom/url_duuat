@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         $password = $_POST['password'];
         $user_number = $_POST['user_number'];
 
-        // التحقق من الحقول الفارغة
         if (empty($name)) {
             $error = "يرجى إدخال الاسم باللغة العربية";
         }
@@ -24,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             $errornumber = "يرجى إدخال رقمكم بالمؤسسة بشكل صحيح";
         }
 
-        // التحقق من وجود رقم المستخدم في قاعدة البيانات
         if (empty($error) && empty($errorpass) && empty($errornumber)) {
             $check_sql = "SELECT * FROM users WHERE user_number = ?";
             $stmt = mysqli_prepare($conn, $check_sql);
@@ -33,17 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             $result = mysqli_stmt_get_result($stmt);
 
             if (mysqli_num_rows($result) > 0) {
-                // رقم المستخدم موجود بالفعل
                 $errornumber = "رقم المستخدم مسجل مسبقًا. يرجى اختيار رقم آخر.";
             } else {
-                // إدخال البيانات في قاعدة البيانات
                 $sql = "INSERT INTO users (user_name, password, user_number) VALUES (?, ?, ?)";
                 $stmt = mysqli_prepare($conn, $sql);
                 mysqli_stmt_bind_param($stmt, 'sss', $name, $password, $user_number);
                 $sql_query = mysqli_stmt_execute($stmt);
 
                 if ($sql_query) {
-                    // استرجاع بيانات المستخدم بعد الإدخال
                     $user_query = "SELECT * FROM users WHERE user_number = ?";
                     $stmt = mysqli_prepare($conn, $user_query);
                     mysqli_stmt_bind_param($stmt, 's', $user_number);
@@ -52,10 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
                     if ($row = mysqli_fetch_assoc($result)) {
                         $_SESSION['user_number'] = $row['user_number'];
-                        $_SESSION['user_name'] = $row['user_name'];  // إضافة اسم المستخدم إلى الجلسة
-                        $_SESSION['role'] = $row['role'] ?? 'user';  // في حال كان لديك عمود للدور
+                        $_SESSION['user_name'] = $row['user_name'];  
+                        $_SESSION['role'] = $row['role'] ?? 'user';  
 
-                        // إعادة التوجيه إلى صفحة المستخدم
                         header("Location: user_page.php");
                         exit;
                     }

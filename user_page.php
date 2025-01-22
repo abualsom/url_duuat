@@ -1,3 +1,4 @@
+
 <?php
 include('conn.php');
 session_start();
@@ -9,7 +10,6 @@ if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'user') {
 
 $name = $_SESSION['user_number'];
 ?>
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 

@@ -10,277 +10,196 @@ if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'admin') {
 $name = $_SESSION['user_number'];
 ?>
 
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المدير العام</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.rtl.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet" />
-    <style>
-        body {
-            font-family: 'Noto Kufi Arabic', serif;
-        }
-
-        :root {
-            --sidebar-width: 280px;
-        }
-
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            right: -280px;
-            top: 0;
-            background: #2c3e50;
-            color: white;
-            z-index: 1000;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar.show {
-            right: 0;
-        }
-
-        .main-content {
-            transition: all 0.3s;
-        }
-
-        .navbar {
-            background-color: #2c3e50 !important;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: white;
-        }
-
-        .user-profile {
-            background-color: #2c3e50;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #3498db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            margin: 0 auto 15px;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        #toggle-sidebar {
-            position: fixed;
-            right: 10px;
-            top: 15px;
-            z-index: 1100;
-        }
-
-        .table th,
-        .table td {
-            text-align: center;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        .table th,
-        .table td {
-            border-left: 1px solid #ddd;
-        }
-
-        .table th:last-child,
-        .table td:last-child {
-            border-left: none;
-        }
-
-        th {
-            background-color: #2c3e50 !important;
-            color: white !important;
-        }
-
-        .btn-group button {
-            margin: 0 5px;
-        }
-
-        th:last-child,
-        td:first-child {
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-        }
-
-        th:first-child,
-        td:last-child {
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-
-        .nav-link {
-            color: #ddd;
-        }
-
-        .nav-link:hover {
-            color: aqua;
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" href="heder-icon.png"
+        type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <title>إضافة معلومات المشرفين</title>
 </head>
 
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class=" navbar navbar-expand-lg">
         <div class="container-fluid">
             <button class="btn btn-light" id="toggle-sidebar">
                 <i class="bi bi-list"></i>
             </button>
             <div class="ms-auto d-flex align-items-center">
                 <div class="d-flex align-items-center me-3">
-                    <div class="user-avatar me-2" style="width: 40px; height: 40px; font-size: 1.2rem;">
-                        <i class="bi bi-person-fill"></i>
-                    </div>
-                    <h6 class="mb-0">اسم المستخدم</h6>
+                    <img src="logo.png" alt="" style="width: 40px; height: 40px; border-radius: 50%;" />
                 </div>
             </div>
-            <button class="btn btn-danger btn-sm ms-auto">
+            <a href="logout.php" class="btn btn-danger btn-sm ms-auto">
                 <i class="bi bi-door-open-fill me-1"></i>
-                تسجيل الخروج
-            </button>
+                <span class="d-none d-md-inline">تسجيل الخروج</span>
+            </a>
         </div>
     </nav>
-
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="user-profile">
-            <div class="user-avatar">
-                <i class="bi bi-person-fill"></i>
-            </div>
-            <h5 class="mb-2">اسم المستخدم</h5>
+            <img src="logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;" />
+            <h5 class="mb-2" style="margin-top: 20px;">اسم الأدمن</h5>
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
                 <a class="nav-link" href="profile.php">
-                    <i class="bi bi-people-fill ms-2"></i>
-                    الملف الشخصي
+                    <i class="bi bi-person"></i>
+                    الملف الشخصي </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-link-45deg ms-2"></i>
+                    كافة الروابط
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="admin_page.php">
-                <i class="bi bi-link-45deg ms-2"></i>
-                    الروابط العامة 
+                <a class="nav-link" href="#">
+                    <i class="bi bi-link-45deg ms-2"></i>
+                    الروابط الخاصة
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="admin_page.php">
-                <i class="bi bi-link-45deg ms-2"></i>
-                    الروابط الخاصة 
+                <a class="nav-link" href="#">
+                    <i class="bi bi-link-45deg ms-2"></i>
+                    الروابط العامة
                 </a>
-            </li>
-            </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="bi bi-door-open-fill me-1"></i>
-                    تسجيل الخروج
+                    <span class="m-none d-sm-inline">تسجيل الخروج</span>
                 </a>
             </li>
         </ul>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="container-fluid mt-4">
-            <div class="card border-0 shadow-sm">
+    <div class="container">
+        <form action="" method="get">
+            <div class="container my-1">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <tr>
-                                    <th width="80">#</th>
-                                    <th>عنوان الرابط</th>
-                                    <th width="300">الإجراءات</th>
-                                    <th>الملاحظات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>https://example.com</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button class="btn btn-success btn-sm" title="نسخ">
-                                                <i class="bi bi-clipboard"></i>
-                                            </button>
-                                            <button class="btn btn-info btn-sm" title="فتح">
-                                                <i class="bi bi-box-arrow-up-right"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>ملاحظة تجريبية</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <input class="form-control me-5" type="search" placeholder="أدخل كلمة البحث" aria-label="بحث">
+                        <button class="btn btn-outline-success" style="color: #ae2754; border-color: #cf0c0c; margin-right: 10px; " type="submit">
+                            بحث
+                        </button>
                     </div>
                 </div>
             </div>
+        </form>
+
+
+        <div class="overflow-auto w-100" style="height: 400px;">
+            <table id="lessons-table" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="position: sticky; top: 0; z-index: 10;">#</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">عنوان الرابط</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">الرابط</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">الملاحظات</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($rows->num_rows > 0) {
+                        while ($row = $rows->fetch_assoc()) {
+                            echo
+                            '
+              <tr>
+                  <td>' . $row['id'] . '</td>
+                  <td>' . $row['url_title'] . '</td>
+                  <td>' . $row['url'] . '</td>
+                  <td>' . $row['commend'] . '</td>
+                  <td class="notes_1"> ' . $row['notes'] . '</td>
+                  <td>
+                      <div class="d-flex justify-content-center gap-2 align-items-center">
+                          
+                          <a class="btn py-2 btn-primary" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
+                              <i class="bi bi-box-arrow-up-right"></i>
+                          </a>
+                        <a class=" py-2 btn btn-success update" href="update.php?id=' . $row['id'] . '">
+                              <i class="bi bi-copy"></i>
+                          </a>
+                      </div>
+                  </td>
+              </tr>
+              
+              ';
+                        }
+                    } else {
+                        echo '
+            <tr>
+            
+              <td colspan="6">لا توجد بيانات</td>
+            </tr>
+            ';
+                    } ?>
+
+                </tbody>
+            </table>
         </div>
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebar = document.getElementById('sidebar');
+                const toggleBtn = document.getElementById('toggle-sidebar');
+                const mainContent = document.querySelector('.main-content');
 
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggle-sidebar');
+                // إضافة overlay للخلفية
+                const overlay = document.createElement('div');
+                overlay.className = 'overlay';
+                document.body.appendChild(overlay);
 
-        toggleButton.addEventListener('click', function() {
-            if (sidebar.classList.contains('show')) {
-                sidebar.classList.remove('show');
-                toggleButton.style.right = '10px';
-            } else {
-                sidebar.classList.add('show');
-                toggleButton.style.right = '290px';
-            }
-        });
-    </script>
+                function toggleSidebar() {
+                    sidebar.classList.toggle('show');
+                    overlay.classList.toggle('show');
+                }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+                toggleBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleSidebar();
+                });
+
+                overlay.addEventListener('click', toggleSidebar);
+
+                // إغلاق القائمة عند الضغط خارجها
+                document.addEventListener('click', function(e) {
+                    if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('show')) {
+                        toggleSidebar();
+                    }
+                });
+
+                // منع إغلاق القائمة عند الضغط داخلها
+                sidebar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
 
 </html>
