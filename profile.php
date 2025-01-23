@@ -1,14 +1,18 @@
 <?php
 include('conn.php');
 session_start();
-
 $user_number = $_SESSION['user_number'];
+
+if (!isset($_SESSION['user_number'])) {
+    header("Location: create_account.php");
+    exit();
+}
 
 $user_query = "SELECT * FROM users WHERE user_number = $user_number";
 $sql = mysqli_query($conn, $user_query);
 $sql_query = mysqli_fetch_array($sql);
 
-if (isset($_POST['got_home'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['got_home'])) {
     if ($sql_query['role'] == 'user') {
         header("Location: user_page.php");
         exit();
@@ -20,6 +24,7 @@ if (isset($_POST['got_home'])) {
         exit();
     }
 }
+
 
 if (isset($_POST['edit_profile'])) {
     header("Location: edit_profile.php");
@@ -102,6 +107,41 @@ if (isset($_POST['edit_profile'])) {
         .icon {
             color: #2c3e50;
         }
+
+        .edit-button {
+            background-color:#2c3e50;
+            /* نفس لون الزر */
+            color: white;
+            /* لون النص */
+            border: none;
+            /* إزالة الحدود */
+            padding: 10px 20px;
+            /* مساحة داخلية */
+            text-align: center;
+            /* محاذاة النص في المنتصف */
+            text-decoration: none;
+            /* إزالة الخط السفلي */
+            display: inline-block;
+            /* العرض نفس inline-block */
+            font-size: 16px;
+            /* حجم النص */
+            cursor: pointer;
+            /* المؤشر يظهر كيد عند التمرير */
+            border-radius: 5px;
+            /* حواف مستديرة */
+            transition: background-color 0.3s ease;
+            /* تأثير الانتقال عند التمرير */
+        }
+
+        .edit-button:hover {
+            background-color: #0056b3;
+            /* لون أغمق عند التمرير */
+        }
+
+        .button-like {
+            display: inline-block;
+            /* لجعل العنصر مثل الزر */
+        }
     </style>
 </head>
 
@@ -157,9 +197,10 @@ if (isset($_POST['edit_profile'])) {
                         <form action="" method="post">
                             <!-- زر تعديل الملف الشخصي -->
                             <div class="text-center mt-4">
-                                <button name="edit_profile" class="edit-button">
+                                <a name="edit_profile" href="edit_profile.php?id=<?php echo $sql_query['id']; ?>" class="edit-button button-like">
                                     تعديل المعلومات
-                                </button>
+                                </a>
+
                                 <button name='got_home' class="edit-button">
                                     الرجوع للصفحة الرئيسية
                                 </button>

@@ -55,7 +55,7 @@ $name = $_SESSION['user_number'];
                     <img src="logo.png" alt="" style="width: 40px; height: 40px; border-radius: 50%;" />
                 </div>
             </div>
-            <a  href="logout.php" class="btn btn-danger btn-sm ms-auto">
+            <a href="logout.php" class="btn btn-danger btn-sm ms-auto">
                 <i class="bi bi-door-open-fill me-1"></i>
                 <span class="d-none d-md-inline">تسجيل الخروج</span>
             </a>
@@ -202,24 +202,24 @@ $name = $_SESSION['user_number'];
                     if ($rows->num_rows > 0) {
                         while ($row = $rows->fetch_assoc()) {
                             echo '
-              <tr>
-                  <td>' . $row['ders_tame'] . '</td>
-                  <td>' . $row['ders_konu'] . '</td>
-                  <td>' . $row['book'] . '</td>
-                  <td>' . $row['teacher'] . '</td>
-                  <td class="notes_1"> ' . $row['notes'] . '</td>
-                  <td>
-                      <div class="d-flex justify-content-center gap-2 align-items-center">
-                          <a class="btn py-2 btn-primary update" href="update.php?id=' . $row['id'] . '">
-                              <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a class="btn py-2 btn-danger" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
-                              <i class="bi bi-trash"></i>
-                          </a>
-                      </div>
-                  </td>
-              </tr>
-              ';
+                                <tr>
+                                    <td>' . $row['ders_tame'] . '</td>
+                                    <td>' . $row['ders_konu'] . '</td>
+                                    <td>' . $row['book'] . '</td>
+                                    <td>' . $row['teacher'] . '</td>
+                                    <td class="notes_1"> ' . $row['notes'] . '</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-2 align-items-center">
+                                            <a class="btn py-2 btn-primary update" href="update.php?id=' . $row['id'] . '">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a class="btn py-2 btn-danger" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    ';
                         }
                     } else {
                         echo '
