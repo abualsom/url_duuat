@@ -78,27 +78,27 @@ $name = $_SESSION['user_number'];
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="lider_page.php">
                     <i class="bi bi-people-fill ms-2"></i>
                     المستخدمين
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="links.php">
                     <i class="bi bi-link-45deg ms-2"></i>
-                    كافة الروابط
+                    إضافة الروابط
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="private_links.php">
                     <i class="bi bi-link-45deg ms-2"></i>
-                    إضافة الروابط الخاصة
+                     الروابط الخاصة
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="general_links.php">
                     <i class="bi bi-link-45deg ms-2"></i>
-                    إضافة الروابط العامة
+                     الروابط العامة
                 </a>
             </li>
             <li class="nav-item">
@@ -123,12 +123,12 @@ $name = $_SESSION['user_number'];
                 <input
                     type="text"
                     id="url_title"
-                    placeholder="أدخل  عنوان الرابط"
+                    placeholder="أدخل عنوان الرابط"
                     name="url_title"
                     required />
             </div>
             <div class="form-group">
-                <label for="url"> الرابط :</label>
+                <label for="url"> الرابط:</label>
                 <input
                     type="url"
                     id="url"
