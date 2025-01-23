@@ -1,12 +1,31 @@
 <?php
-// بيانات المستخدم (يمكن جلبها من قاعدة البيانات)
-$userData = [
-    'name' => 'أحمد محمد علي',
-    'institutionId' => '2024-001',
-    'email' => 'ahmed.m@example.com',
-    'phone' => '٠٥٠ ١٢٣ ٤٥٦٧',
-    'password' => '••••••••'
-];
+include('conn.php');
+session_start();
+
+$user_number = $_SESSION['user_number'];
+
+$user_query = "SELECT * FROM users WHERE user_number = $user_number";
+$sql = mysqli_query($conn, $user_query);
+$sql_query = mysqli_fetch_array($sql);
+
+if (isset($_POST['got_home'])) {
+    if ($sql_query['role'] == 'user') {
+        header("Location: user_page.php");
+        exit();
+    } elseif ($sql_query['role'] == 'admin') {
+        header("Location: admin_page.php");
+        exit();
+    } elseif ($sql_query['role'] == 'lider') {
+        header("Location: lider_page.php");
+        exit();
+    }
+}
+
+if (isset($_POST['edit_profile'])) {
+    header("Location: edit_profile.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +127,7 @@ $userData = [
                                 <i data-lucide="user" class="icon"></i>
                                 الاسم الكامل
                             </div>
-                            <p class="h5 mb-0 pe-7"><?php echo htmlspecialchars($userData['name']); ?></p>
+                            <p class="h5 mb-0 pe-7"><?php echo $sql_query['user_name']; ?></p>
                         </div>
 
                         <div class="info-card">
@@ -116,7 +135,7 @@ $userData = [
                                 <i data-lucide="building" class="icon"></i>
                                 رقمك في المؤسسة
                             </div>
-                            <p class="h5 mb-0 pe-7"><?php echo htmlspecialchars($userData['institutionId']); ?></p>
+                            <p class="h5 mb-0 pe-7"><?php echo $sql_query['user_number']; ?></p>
                         </div>
 
 
@@ -125,7 +144,7 @@ $userData = [
                                 <i data-lucide="phone" class="icon"></i>
                                 رقم الجوال
                             </div>
-                            <p class="h5 mb-0 pe-7"><?php echo htmlspecialchars($userData['phone']); ?></p>
+                            <p class="h5 mb-0 pe-7"><?php echo $sql_query['phone_number']; ?></p>
                         </div>
 
                         <div class="info-card">
@@ -133,19 +152,23 @@ $userData = [
                                 <i data-lucide="key" class="icon"></i>
                                 كلمة المرور
                             </div>
-                            <p class="h5 mb-0 pe-7"><?php echo htmlspecialchars($userData['password']); ?></p>
+                            <p class="h5 mb-0 pe-7"><?php echo $sql_query['password']; ?></p>
                         </div>
-
-                        <!-- زر تعديل الملف الشخصي -->
-                        <div class="text-center mt-4">
-                            <button class="edit-button">
-                                تعديل المعلومات
-                            </button>
-                        </div>
+                        <form action="" method="post">
+                            <!-- زر تعديل الملف الشخصي -->
+                            <div class="text-center mt-4">
+                                <button name="edit_profile" class="edit-button">
+                                    تعديل المعلومات
+                                </button>
+                                <button name='got_home' class="edit-button">
+                                    الرجوع للصفحة الرئيسية
+                                </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- تهيئة Lucide Icons -->
