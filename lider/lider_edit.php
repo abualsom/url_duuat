@@ -1,9 +1,9 @@
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
-    header('Location: login.php');
+    header('Location: ../general/login.php');
     exit;
 }
 $name = $_SESSION['user_number'];
@@ -50,11 +50,11 @@ $conn->close();
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap"
         rel="stylesheet" />
-    <link rel="icon" href="heder-icon.png"
+    <link rel="icon" href="../heder-icon.png"
         type="image/png">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style/style.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

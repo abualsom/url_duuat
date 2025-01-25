@@ -1,5 +1,5 @@
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 
 $query = "SELECT user_name, user_number FROM users WHERE role = 'admin'";
@@ -49,8 +49,8 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="heder-icon.png" type="image/png">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../heder-icon.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -93,7 +93,6 @@ $conn->close();
 </head>
 
 <body>
-    <!-- Navbar -->
     <nav class=" navbar navbar-expand-lg">
         <div class="container-fluid">
             <button class="btn btn-light" id="toggle-sidebar">

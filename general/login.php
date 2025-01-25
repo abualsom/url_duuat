@@ -1,6 +1,6 @@
 <?php
 
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 
 $error_massage = "";
@@ -20,15 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_number'] = $row['user_number'];
             if ($row['role'] == 'user') {
                 $_SESSION['role'] = 'user';
-                header("Location: user_page.php");
+                header("Location: ../user/user_page.php");
                 exit;
             } elseif ($row['role'] == 'admin') {
                 $_SESSION['role'] = 'admin';
-                header("Location: admin_page.php");
+                header("Location: ../admin/admin_page.php");
                 exit;
             }elseif ($row['role'] == 'lider') {
                 $_SESSION['role'] = 'lider';
-                header("Location: lider_page.php");
+                header("Location: ../lider/lider_page.php");
                 exit;
             }
         } else {

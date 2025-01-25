@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 $error = "";
 $errorpass = "";
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         $_SESSION['user_name'] = $row['user_name'];  
                         $_SESSION['role'] = $row['role'] ?? 'user';  
 
-                        header("Location: user_page.php");
+                        header("Location: ../user/user_page.php");
                         exit;
                     }
                 }
@@ -232,7 +232,7 @@ $conn->close();
             <input type="password" id="password" name="password" placeholder="كلمة المرور " required>
 
             <button type="submit" name="submit">انشاء الحساب </button>
-            <a href="login.php" class="centered-link">لدي حساب بالفعل</a>
+            <a href="../general/login.php" class="centered-link">لدي حساب بالفعل</a>
 
         </form>
     </div>

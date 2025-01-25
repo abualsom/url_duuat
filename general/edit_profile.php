@@ -1,5 +1,5 @@
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 $user_number = $_SESSION['user_number'];
 
@@ -124,7 +124,6 @@ $conn->close();
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <!-- رأس الصفحة مع الصورة -->
                     <div class="profile-header">
                         <div class="profile-avatar mb-2">
                             <svg class="w-100 h-100 text-secondary" viewBox="0 0 24 24">
@@ -134,7 +133,6 @@ $conn->close();
                         <h1 class="h5 fw-bold mb-1">الملف الشخصي</h1>
                     </div>
                     <form action="" method="POST">
-                        <!-- معلومات المستخدم -->
                         <div class="p-4">
                             <div class="info-card">
                                 <div class="info-label">

@@ -1,10 +1,10 @@
 
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'user') {
-    header('Location: login.php');
+    header('Location: ../general/login.php');
     exit;
 }
 

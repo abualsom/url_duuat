@@ -1,5 +1,5 @@
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 $user_number = $_SESSION['user_number'];
 
@@ -14,13 +14,13 @@ $sql_query = mysqli_fetch_array($sql);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['got_home'])) {
     if ($sql_query['role'] == 'user') {
-        header("Location: user_page.php");
+        header("Location: ../user/user_page.php");
         exit();
     } elseif ($sql_query['role'] == 'admin') {
-        header("Location: admin_page.php");
+        header("Location: ../admin/admin_page.php");
         exit();
     } elseif ($sql_query['role'] == 'lider') {
-        header("Location: lider_page.php");
+        header("Location: ../lider/lider_page.php");
         exit();
     }
 }

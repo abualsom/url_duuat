@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('conn.php');
+include('../conn/conn.php');
 $role = $_SESSION['role'];
 $sql_query = "SELECT * FROM users WHERE role = $role";
 
@@ -17,13 +17,13 @@ if (isset($_POST['yes'])) {
 } elseif (isset($_POST['no'])) {
 
     if ($role == 'user') {
-        header("Location: user_page.php");
+        header("Location: ../user/user_page.php");
         exit();
     } elseif ($role == 'admin') {
-        header("Location: admin_page.php");
+        header("Location: ../admin/admin_page.php");
         exit();
     } elseif ($role == 'lider') {
-        header("Location: lider_page.php");
+        header("Location: ../lider/lider_page.php");
         exit();
     }
 }

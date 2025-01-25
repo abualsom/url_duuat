@@ -1,9 +1,9 @@
 <?php
-include('conn.php');
+include('../conn/conn.php');
 session_start();
 
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
-    header('Location: login.php');
+    header('Location: ../general/login.php');
     exit;
 }
 
@@ -50,9 +50,9 @@ $conn->close();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap" rel="stylesheet" />
-    <link rel="icon" href="heder-icon.png" type="image/png">
+    <link rel="icon" href="../style/logo.png" type="image/png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <title>إضافة معلومات المشرفين</title>
@@ -92,12 +92,18 @@ $conn->close();
                     <i class="bi bi-person"></i>
                     الملف الشخصي </a>
 
-
+                    </li>
+            <li class="nav-item">
+                <a class="nav-link" href="users.php">
+                    <i class="bi bi-people-fill ms-2"></i>
+                    المستخدمين
+                </a>
+            </li>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="lider_page.php">
                     <i class="bi bi-people-fill ms-2"></i>
-                    المستخدمين
+                    روابط المستخدمين
                 </a>
             </li>
             <li class="nav-item">
