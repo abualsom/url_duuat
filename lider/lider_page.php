@@ -2,6 +2,7 @@
 include('../conn/conn.php');
 session_start();
 
+
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
     header('Location: ../general/login.php');
     exit;
@@ -18,7 +19,8 @@ if (isset($_GET['search'])) {
 $sql = "SELECT 
             url_data.id, 
             url_data.url_title, 
-            url_data.url, 
+            url_data.url,
+            url_data.link_type,
             users.user_name, 
             users.user_number, 
             url_data.note 
@@ -27,6 +29,7 @@ $sql = "SELECT
         ON url_data.admin_url = users.user_number
         WHERE 
             url_data.url_title LIKE '%$search%' OR
+            url_data.link_type LIKE '%$search%' OR
             url_data.url LIKE '%$search%' OR
             users.user_name LIKE '%$search%' OR
             users.user_number LIKE '%$search%' OR
@@ -88,7 +91,7 @@ $conn->close();
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link" href="profile.php">
+                <a class="nav-link" href='../general/profile.php'>
                     <i class="bi bi-person"></i>
                     الملف الشخصي </a>
 
@@ -154,6 +157,7 @@ $conn->close();
                     <th style="position: sticky; top: 0; z-index: 10;">عنوان الرابط</th>
                     <th style="position: sticky; top: 0; z-index: 10;">الرابط</th>
                     <th style="position: sticky; top: 0; z-index: 10;">المشرف</th>
+                    <th style="position: sticky; top: 0; z-index: 10;">نوع الرابط</th>
                     <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th>
                     <th style="position: sticky; top: 0; z-index: 10;">الملاحظات</th>
                 </tr>
@@ -167,13 +171,14 @@ $conn->close();
                         <td>' . $row['id'] . '</td>
                         <td>' . $row['url_title'] . '</td>
                         <td>' . $row['url'] . '</td>
+                        <td>' . $row['link_type'] . '</td>
                         <td>' . htmlspecialchars($row['user_number']) . ' - ' . htmlspecialchars($row['user_name']) . '</td>
                         <td>
                             <div class="d-flex justify-content-center gap-2 align-items-center">
-                                <a class="btn py-2 btn-primary update" href="update.php?id=' . $row['id'] . '">
+                                <a class="btn py-2 btn-primary update" href="update_users.php?id=' . $row['id'] . '">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a class="btn py-2 btn-danger" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
+                                <a class="btn py-2 btn-danger" href="delet_users.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </div>
@@ -185,7 +190,7 @@ $conn->close();
                 } else {
                     echo '
         <tr>
-          <td colspan="6">لا توجد بيانات</td>
+          <td colspan="7">لا توجد بيانات</td>
         </tr>
         ';
                 }

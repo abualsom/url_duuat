@@ -9,16 +9,17 @@ if (!$rows_1) {
     die("خطأ في الاستعلام: " . $conn->error);
 }
 
-$url_sql = 'INSERT INTO url_data (url, url_title, admin_url, note) VALUES (?, ?, ?, ?)';
+$url_sql = 'INSERT INTO url_data (url, url_title, admin_url, note, link_type) VALUES (?, ?, ?, ?, ?)';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $url = $_POST['url'];
     $url_title = $_POST['url_title'];
-    $admin_url = $_POST['admin_url'];
+    $link_type = $_POST['link_type'];
+    $admin_url = isset($_POST['admin_url']) ? $_POST['admin_url'] : null;
     $note = $_POST['note'];
 
     if ($stmt = $conn->prepare($url_sql)) {
-        $stmt->bind_param("ssss", $url, $url_title, $admin_url, $note);
+        $stmt->bind_param("sssss", $url, $url_title, $admin_url, $note, $link_type);
 
         if ($stmt->execute()) {
             $_SESSION['success_message'] = "تمت إضافة البيانات بنجاح!";
@@ -27,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $stmt->close();
-
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } else {
         echo "خطأ في إعداد الاستعلام: " . $conn->error;
     }
 }
+
 
 $conn->close();
 ?>
@@ -119,7 +120,7 @@ $conn->close();
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link" href="profile.php">
+                <a class="nav-link" href='../general/profile.php'>
                     <i class="bi bi-person"></i>
                     الملف الشخصي </a>
 
@@ -197,8 +198,17 @@ $conn->close();
             </div>
 
             <div class="form-group">
+                <label for="link_type">نوع الرابط:</label>
+                <select class="form-control" id="link_type" name="link_type" required>
+                    <option value="" disabled selected>اختر نوع الرابط</option>
+                    <option value="عام">عام</option>
+                    <option value="خاص">خاص</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="admin_field" style="display: none;">
                 <label for="admin_url">المشرف:</label>
-                <select class="form-control select2" id="admin_url" name="admin_url" required>
+                <select class="form-control select2" id="admin_url" name="admin_url">
                     <option value="" disabled selected>اختر المشرف</option>
                     <?php
                     if ($rows_1->num_rows > 0) {
@@ -212,9 +222,9 @@ $conn->close();
                         echo '<option value="" disabled>لا يوجد مشرف</option>';
                     }
                     ?>
-
                 </select>
             </div>
+
 
             <div class="form-group">
                 <label for="note">الملاحظات:</label>
@@ -230,6 +240,21 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const linkType = document.getElementById('link_type');
+            const adminField = document.getElementById('admin_field');
+
+            linkType.addEventListener('change', function() {
+                if (this.value === 'خاص') {
+                    adminField.style.display = 'block';
+                    document.getElementById('admin_url').required = true;
+                } else {
+                    adminField.style.display = 'none';
+                    document.getElementById('admin_url').required = false;
+                }
+            });
+        });
+
         $(document).ready(function() {
             $('.select2').select2({
                 placeholder: 'اختر المشرف',

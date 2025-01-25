@@ -129,7 +129,7 @@ $conn->close();
                 شكراً لتسجيلك معنا، حسابك قيد المراجعة الآن، وسيتم ترقيته بعد موافقة الإدارة.
             </p>
 
-            <a href="logout.php" class="btn btn-logout">
+            <a href="../general/logout.php" class="btn btn-logout">
                 تسجيل الخروج
             </a>
         </div>
