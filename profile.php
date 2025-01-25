@@ -31,6 +31,9 @@ if (isset($_POST['edit_profile'])) {
     exit();
 }
 
+
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>

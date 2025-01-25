@@ -2,13 +2,63 @@
 include('conn.php');
 session_start();
 
+// التأكد من أن المستخدم هو "admin" فقط
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit;
 }
 
+// استرجاع رقم المستخدم من الجلسة
 $name = $_SESSION['user_number'];
-?>
+
+// التحقق من وجود قيمة بحث
+$search = '';
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+}
+
+// أولاً: نبحث عن رقم المستخدم في جدول users باستخدام قيمة من الجلسة
+$sql_user = "SELECT user_number FROM users WHERE user_number = '$name'";
+
+// تنفيذ الاستعلام لجلب رقم المستخدم
+$result_user = $conn->query($sql_user);
+
+// إذا كان هناك تطابق مع الرقم في جدول users
+if ($result_user->num_rows > 0) {
+    // استرجاع الرقم الذي تم العثور عليه في جدول users
+    $user_data = $result_user->fetch_assoc();
+    $user_number = $user_data['user_number'];
+    
+    // ثانياً: الآن نبحث في جدول url_data باستخدام الرقم الذي وجدناه في جدول users
+    // هنا نبحث في جدول url_data مع تطابق admin_url مع user_number من جدول users
+    $sql_url_data = "SELECT * FROM url_data WHERE 
+                     (url_title LIKE '%$search%' OR 
+                      url LIKE '%$search%' OR 
+                      admin_url LIKE '%$search%' OR 
+                      id LIKE '%$search%')
+                      AND admin_url = '$user_number'"; 
+
+    // تنفيذ الاستعلام
+    $rows = $conn->query($sql_url_data);
+
+    // معالجة البيانات إذا كان هناك نتائج
+    if ($rows->num_rows > 0) {
+        while ($row = $rows->fetch_assoc()) {
+            echo "نتيجة البحث: " . $row['url_title'] . "<br>";
+        }
+    } else {
+        echo "لا توجد نتائج مطابقة.";
+    }
+} else {
+    // في حالة عدم العثور على المستخدم في جدول users
+    echo "المستخدم غير موجود.";
+}
+
+$conn->close();
+?>             
+
+
+
 
 
 <!DOCTYPE html>
@@ -108,7 +158,6 @@ $name = $_SESSION['user_number'];
             </div>
         </form>
 
-
         <div class="overflow-auto w-100" style="height: 400px;">
             <table id="lessons-table" style="width: 100%; border-collapse: collapse;">
                 <thead>
@@ -116,50 +165,45 @@ $name = $_SESSION['user_number'];
                         <th style="position: sticky; top: 0; z-index: 10;">#</th>
                         <th style="position: sticky; top: 0; z-index: 10;">عنوان الرابط</th>
                         <th style="position: sticky; top: 0; z-index: 10;">الرابط</th>
-                        <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th>
-                        <th style="position: sticky; top: 0; z-index: 10;">الملاحظات</th>
-
+                        <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th> <!-- تم تبديل العناوين -->
+                        <th style="position: sticky; top: 0; z-index: 10;">الملاحظات</th> <!-- تم تبديل العناوين -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     if ($rows->num_rows > 0) {
                         while ($row = $rows->fetch_assoc()) {
-                            echo
-                            '
-              <tr>
-                  <td>' . $row['id'] . '</td>
-                  <td>' . $row['url_title'] . '</td>
-                  <td>' . $row['url'] . '</td>
-                  <td>' . $row['commend'] . '</td>
-                  <td class="notes_1"> ' . $row['notes'] . '</td>
-                  <td>
-                      <div class="d-flex justify-content-center gap-2 align-items-center">
-                          
-                          <a class="btn py-2 btn-primary" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
-                              <i class="bi bi-box-arrow-up-right"></i>
-                          </a>
-                        <a class=" py-2 btn btn-success update" href="update.php?id=' . $row['id'] . '">
-                              <i class="bi bi-copy"></i>
-                          </a>
-                      </div>
-                  </td>
-              </tr>
-              
-              ';
+                            echo '
+                    <tr>
+                        <td>' . $row['id'] . '</td>
+                        <td>' . $row['url_title'] . '</td>
+                        <td>' . $row['url'] . '</td>
+                        <td>
+                            <div class="d-flex justify-content-center gap-2 align-items-center">
+                                <a class="btn py-2 btn-primary" href="delet.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
+                                    <i class="bi bi-box-arrow-up-right"></i>
+                                </a>
+                                <a class="py-2 btn btn-success update" href="update.php?id=' . $row['id'] . '">
+                                    <i class="bi bi-copy"></i>
+                                </a>
+                            </div>
+                        </td> <!-- تم تبديل المحتوى -->
+                        <td class="note_1"> ' . $row['note'] . '</td> <!-- تم تبديل المحتوى -->
+                    </tr>
+                    ';
                         }
                     } else {
                         echo '
-            <tr>
-            
-              <td colspan="6">لا توجد بيانات</td>
-            </tr>
-            ';
-                    } ?>
-
+                <tr>
+                    <td colspan="6">لا توجد بيانات</td>
+                </tr>
+                ';
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const sidebar = document.getElementById('sidebar');

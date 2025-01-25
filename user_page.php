@@ -8,7 +8,11 @@ if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'user') {
     exit;
 }
 
+
 $name = $_SESSION['user_number'];
+
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">

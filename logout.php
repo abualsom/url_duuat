@@ -16,19 +16,21 @@ if (isset($_POST['yes'])) {
     exit();
 } elseif (isset($_POST['no'])) {
 
-    if ($role == 'user'){
+    if ($role == 'user') {
         header("Location: user_page.php");
         exit();
-    }elseif($role == 'admin'){
+    } elseif ($role == 'admin') {
         header("Location: admin_page.php");
         exit();
-    }
-    elseif($role == 'lider'){
+    } elseif ($role == 'lider') {
         header("Location: lider_page.php");
         exit();
     }
 }
 $name = $_SESSION['user_number'];
+
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
