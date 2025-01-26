@@ -1,6 +1,6 @@
 <?php
 
-include('../conn/conn.php');
+include('./conn/conn.php');
 session_start();
 
 $error_massage = "";
