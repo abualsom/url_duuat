@@ -20,13 +20,13 @@ if (isset($_POST['yes'])) {
 } elseif (isset($_POST['no'])) {
 
     if ($role == 'user') {
-        header("Location: ../user/user_page.php");
+        header("Location: ./user/user_page.php");
         exit();
     } elseif ($role == 'admin') {
-        header("Location: ../admin/admin_page.php");
+        header("Location: ./admin/admin_page.php");
         exit();
     } elseif ($role == 'lider') {
-        header("Location: ../lider/lider_page.php");
+        header("Location: ./lider/lider_page.php");
         exit();
     }
 }
