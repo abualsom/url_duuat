@@ -15,18 +15,18 @@ if (!isset($_SESSION['user_number'])) {
 if (isset($_POST['yes'])) {
     session_unset();
     session_destroy();
-    header("Location: ./index.php");
+    header("Location: ../index.php");
     exit();
 } elseif (isset($_POST['no'])) {
 
     if ($role == 'user') {
-        header("Location: ./user/user_page.php");
+        header("Location: ../user/user_page.php");
         exit();
     } elseif ($role == 'admin') {
-        header("Location: ./admin/admin_page.php");
+        header("Location: ../admin/admin_page.php");
         exit();
     } elseif ($role == 'lider') {
-        header("Location: ./lider/lider_page.php");
+        header("Location: ../lider/lider_page.php");
         exit();
     }
 }
