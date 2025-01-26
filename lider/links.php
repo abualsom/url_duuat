@@ -1,7 +1,20 @@
 <?php
 include('../conn/conn.php');
 session_start();
+if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
+    header('Location: ../index.php');
+    exit;
+}
 
+$user_number = $_SESSION['user_number'];
+
+$sql_name = "SELECT user_name FROM users WHERE user_number = '$user_number'";
+$sql_query = mysqli_query($conn, $sql_name);
+
+if ($sql_query) {
+    $row = mysqli_fetch_assoc($sql_query);
+    $user_name = $row['user_name'];
+}
 $query = "SELECT user_name, user_number FROM users WHERE role = 'admin'";
 $rows_1 = $conn->query($query);
 
@@ -66,7 +79,21 @@ $conn->close();
             padding-bottom: 10px;
         }
 
+        .btn_submit {
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
 
+        .btn_submit:hover {
+            background-color: rgb(17, 118, 119);
+            color: #fff;
+        }
         .container {
             max-width: 700px;
             margin: 15px auto;
@@ -101,10 +128,10 @@ $conn->close();
             </button>
             <div class="ms-auto d-flex align-items-center">
                 <div class="d-flex align-items-center me-3">
-                    <img src="logo.png" alt="" style="width: 40px; height: 40px; border-radius: 50%;" />
+                    <img src="../style/logo.png" alt="" style="width: 40px; height: 40px; border-radius: 50%;" />
                 </div>
             </div>
-            <a href="logout.php" class="btn btn-danger btn-sm ms-auto">
+            <a href="../general/logout.php" class="btn btn-danger btn-sm ms-auto">
                 <i class="bi bi-door-open-fill me-1"></i>
                 <span class="d-none d-md-inline">تسجيل الخروج</span>
             </a>
@@ -115,44 +142,54 @@ $conn->close();
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="user-profile">
-            <img src="logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;" />
-            <h5 class="mb-2" style="margin-top: 20px;">اسم الأدمن</h5>
+            <img src="../style/logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;" />
+            <h5 class="mb-2" style="margin-top: 20px;"><?php echo $user_name; ?></h5>
         </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item">
-                <a class="nav-link" href='../general/profile.php'>
-                    <i class="bi bi-person"></i>
-                    الملف الشخصي </a>
+                <a class="nav-link d-flex align-items-center" href="../general/profile.php">
+                    <i class="bi bi-person "  style="font-size: x-large; margin: 0 0 0 8px;"></i>
+                    <span>                   
 
+                   الملف الشخصي
+                   </span>   
 
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="users.php">
+                    <i class="bi bi-people-fill ms-2" style="font-size: x-large; margin: 0 0 0 8px;"></i>
+                    <span>                   
+                المستخدمين
+
+                </span>   
+            </a>
+            </li>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="lider_page.php">
-                    <i class="bi bi-people-fill ms-2"></i>
-                    المستخدمين
+                <a class="nav-link" href="users_url.php">
+                    <i class="bi bi-people-fill ms-2 " style="font-size: x-large; margin: 0 0 0 8px;"></i>
+                    <span>                   
+                    روابط المستخدمين
+                    </span>   
+
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="links.php">
-                    <i class="bi bi-link-45deg ms-2"></i>
+                    <i class="bi bi-link-45deg ms-2" style="font-size: x-large; margin: 0 0 0 8px;"></i>
+                    <span>                   
+
                     إضافة الروابط
+                    </span>   
+
                 </a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="private_links.php">
-                    <i class="bi bi-link-45deg ms-2"></i>
-                    الروابط الخاصة
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="general_links.php">
-                    <i class="bi bi-link-45deg ms-2"></i>
-                    الروابط العامة
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="logout.php">
-                    <i class="bi bi-door-open-fill me-1"></i>
+                <a class="nav-link" href="../general/logout.php">
+                    <i class="bi bi-door-open-fill me-1"style="font-size: x-large; margin: 0 0 0 8px;" ></i>
                     <span class="m-none d-sm-inline">تسجيل الخروج</span>
                 </a>
             </li>
@@ -232,7 +269,7 @@ $conn->close();
             </div>
 
             <div class="text-center">
-                <button class="btn btn-success" type="submit" name="submit">إضافة البيانات</button>
+                <button class="btn btn_submit"  type="submit" name="submit">إضافة البيانات</button>
             </div>
         </form>
     </div>

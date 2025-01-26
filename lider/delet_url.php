@@ -8,13 +8,13 @@ if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
 
 if (isset($_GET['id'])) {
     $delet_id = intval($_GET['id']); 
-    $query = "DELETE FROM users WHERE id = ?";
+    $query = "DELETE FROM url_data WHERE id = ?";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $delet_id);
 
     if ($stmt->execute()) {
-        header('Location: users.php');
+        header('Location: users_url.php');
         exit;
     } else {
         echo "حدث خطأ أثناء الحذف!";

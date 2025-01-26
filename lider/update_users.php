@@ -1,12 +1,13 @@
 <?php
 include('../conn/conn.php');
 session_start();
+if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
+    header('Location: ../index.php');
+    exit;
+}
 $user_number = $_SESSION['user_number'];
 
-if (!isset($_SESSION['user_number'])) {
-    header("Location: create_account.php");
-    exit();
-}
+
 
 
 $update_id = $_GET['id'];
@@ -14,7 +15,11 @@ $update_query = "SELECT * FROM users WHERE id = $update_id";
 
 $select_datas = mysqli_query($conn, $update_query);
 $data_select = mysqli_fetch_array($select_datas);
-
+$translations = [
+    "lider" => "المدير",
+    "admin" => "مشرف",
+    "user" => "مستخدم"
+];
 if (isset($_POST['edit_user'])) {
     if (!empty($_POST['user_name']) && !empty($_POST['password']) && !empty($_POST['user_type'])) {
         $user_name = $_POST['user_name'];
@@ -159,8 +164,8 @@ $conn->close();
                                     صلاحية المستخدم
                                 </div>
                                 <select class="form-control" id="user_type" name="user_type" required>
-                                    <option value="" disabled selected>اختر صلاحية المستخدم</option>
-                                    <option value="lider">مدير</option>
+                                    <option value="" disabled selected> يرجى اختيار الصلاحية</option>
+                                    <option value="lider">الإدارة</option>
                                     <option value="admin">مشرف</option>
                                     <option value="user">مستخدم</option>
                                 </select>

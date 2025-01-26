@@ -232,7 +232,7 @@ $conn->close();
             <input type="password" id="password" name="password" placeholder="كلمة المرور " required>
 
             <button type="submit" name="submit">انشاء الحساب </button>
-            <a href="../general/login.php" class="centered-link">لدي حساب بالفعل</a>
+            <a href="../index.php" class="centered-link">لدي حساب بالفعل</a>
 
         </form>
     </div>

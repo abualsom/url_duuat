@@ -1,6 +1,9 @@
 <?php
 session_start();
 include('../conn/conn.php');
+
+
+
 $role = $_SESSION['role'];
 $sql_query = "SELECT * FROM users WHERE role = $role";
 
@@ -12,7 +15,7 @@ if (!isset($_SESSION['user_number'])) {
 if (isset($_POST['yes'])) {
     session_unset();
     session_destroy();
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 } elseif (isset($_POST['no'])) {
 
@@ -28,7 +31,13 @@ if (isset($_POST['yes'])) {
     }
 }
 $name = $_SESSION['user_number'];
+$sql = "SELECT user_name FROM users WHERE user_number = '$name'";
+$sql_query = mysqli_query($conn, $sql);
 
+if ($sql_query) {
+    $row = mysqli_fetch_assoc($sql_query);
+    $user_name = $row['user_name'];
+}
 
 $conn->close();
 ?>
@@ -131,7 +140,7 @@ $conn->close();
 <body>
     <div class="welcome-container">
         <h1 class="welcome-header text-center">
-            <?php echo htmlspecialchars($name); ?>
+            <?php echo htmlspecialchars($user_name); ?>
             هل حقاً تريد تسجيل الخروج؟
         </h1>
 

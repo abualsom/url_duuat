@@ -183,7 +183,7 @@ $conn->close();
             text-decoration: none;
             display: block;
             text-align: center;
-            margin: 6px 6px 6px;
+            margin: 6px 6px 20px;
             color: rgb(24, 108, 156);
             font-weight: bold;
 
@@ -203,7 +203,7 @@ $conn->close();
             <div>
 
             </div>
-            <label for="user_number"> رقمك في المؤسسة : </label>
+            <label for="user_number"> رقمك في المؤسسة: </label>
             <div class="error">
                 <?php
                 if (isset($error_massage)) echo $error_massage;
@@ -217,7 +217,6 @@ $conn->close();
 
             <button type="submit">تسجيل الدخول</button>
             <a href="create_account.php" class="centered-link_1">إنشاء حساب جديد</a>
-            <a href="index.php" class="centered-link">نسيت كلمة المرور</a>
 
         </form>
     </div>

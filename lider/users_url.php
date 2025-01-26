@@ -1,6 +1,8 @@
 <?php
 include('../conn/conn.php');
 session_start();
+
+
 if (!isset($_SESSION['user_number']) || $_SESSION['role'] !== 'lider') {
     header('Location: ../index.php');
     exit;
@@ -21,29 +23,24 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
 }
 
-$translations = [
-    "lider" => "المدير",
-    "admin" => "مشرف",
-    "user" => "مستخدم"
-];
-
-$searchTranslated = array_search($search, $translations) ?: $search;
-
-$sql = "SELECT * FROM users 
-        WHERE users.user_number LIKE '%$search%' 
-        OR users.user_name LIKE '%$search%' 
-        OR users.role LIKE '%$searchTranslated%'
-        ORDER BY 
-            CASE 
-                WHEN users.role = 'lider' THEN 1
-                WHEN users.role = 'admin' THEN 2
-                ELSE 3
-            END,
-            users.user_number DESC";
-
-
-
-
+$sql = "SELECT 
+            url_data.id, 
+            url_data.url_title, 
+            url_data.url,
+            url_data.link_type,
+            users.user_name, 
+            users.user_number, 
+            url_data.note 
+        FROM url_data 
+        LEFT JOIN users 
+        ON url_data.admin_url = users.user_number
+        WHERE 
+            url_data.url_title LIKE '%$search%' OR
+            url_data.link_type LIKE '%$search%' OR
+            url_data.url LIKE '%$search%' OR
+            users.user_name LIKE '%$search%' OR
+            users.user_number LIKE '%$search%' OR
+            url_data.id LIKE '%$search%'";
 
 
 $rows = $conn->query($sql);
@@ -80,7 +77,7 @@ $conn->close();
 
 
 <body>
-    
+
     <!-- Navbar -->
     <nav class=" navbar navbar-expand-lg">
         <div class="container-fluid">
@@ -159,78 +156,88 @@ $conn->close();
 
 
     <form action="" method="get">
-        <div class="container my-1">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <input class="form-control me-5" type="search" name="search" placeholder="أدخل كلمة البحث" aria-label="بحث" value="<?php echo $search; ?>">
-                    <button class="btn btn-outline-success" style="color: #ae2754; border-color: #cf0c0c; margin-right: 10px;" type="submit">
-                        بحث
-                    </button>
-                </div>
-            </div>
-            <!-- جعل الجدول قابلاً للتمرير -->
-            <div class="table-responsive " style="overflow-x: auto;">
-                <table id="lessons-table" class="table table-bordered table-striped" style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th style="position: sticky; top: 0; z-index: 10;">#</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">المستخدم</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">رقمه في المؤسسة</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">كلمة المرور</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">رقم هاتفه</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">صلاحيته</th>
-                            <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($rows->num_rows > 0) {
-                            while ($row = $rows->fetch_assoc()) {
-                                echo '
-                    <tr>
-                        <td>' . $row['id'] . '</td>
-                        <td>' . $row['user_name'] . '</td>
-                        <td>' . $row['user_number'] . '</td>
-                        <td>' . $row['password'] . '</td>
-                        <td>' . $row['phone_number'] . '</td>
-                        <td>' . $translations[$row['role']] . '</td>
-                        <td>
-                            <div class="d-flex justify-content-center gap-2 align-items-center">
-                                <a class="btn py-2 btn-primary update" href="update_users.php?id=' . $row['id'] . '" onclick="return confirmEdit();">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a class="btn py-2 btn-danger" href="delet_users.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                ';
-                            }
-                        } else {
-                            echo '
-        <tr>
-          <td colspan="7">لا توجد بيانات</td>
-        </tr>
-        ';
-                        }
-                        ?>
-                    </tbody>
-                </table>
+    <div class="container my-1">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <input class="form-control me-5" type="search" name="search" placeholder="أدخل كلمة البحث" aria-label="بحث" value="<?php echo $search; ?>">
+                <button class="btn btn-outline-success" style="color: #ae2754; border-color: #cf0c0c; margin-right: 10px;" type="submit">
+                    بحث
+                </button>
             </div>
         </div>
-    </form>
+        <div class="table-responsive" style="overflow-x: auto;">
+            <table id="lessons-table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="position: sticky; top: 0; z-index: 10;">#</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">عنوان الرابط</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">المشرف</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">نوع الرابط</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">الإجراءات</th>
+                        <th style="position: sticky; top: 0; z-index: 10;">الملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($rows->num_rows > 0) {
+                        while ($row = $rows->fetch_assoc()) {
+                            echo '
+    <tr>
+        <td>' . $row['id'] . '</td>
+        <td>' . $row['url_title'] . '</td>
+        <td>' . htmlspecialchars($row['user_number']) . ' - ' . htmlspecialchars($row['user_name']) . '</td>
+        <td class="notes_1">' . $row['link_type'] . '</td>
+        <td>
+            <div class="d-flex justify-content-center gap-2 align-items-center">
+                <a class="btn py-2 btn-primary update" href="update_url.php?id=' . $row['id'] . '" onsubmit="return confirmEdit();">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a class="btn py-2 btn-warning update" href="' . $row['url'] . '" target="_blank">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+                <a class="btn py-2 btn-success update" href="#" onclick="copyToClipboard(\'' . $row['url'] . '\'); return false;">
+                    <i class="bi bi-clipboard2-check"></i>
+                </a>
+                <a class="btn py-2 btn-danger update" href="delet_url.php?id=' . $row['id'] . '" onclick="return confirmDelete();">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </div>
+        </td>
+        <td>' . $row['note'] . '</td>
+    </tr>';
+                        }
+                    } else {
+                        echo '
+        <tr>
+          <td colspan="7">لا توجد بيانات</td>
+        </tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
 
 
 
     </div>
     <script>
+        function confirmEdit() {
+            return confirm("هل أنت متأكد أنك تريد تعديل البيانات؟");
+        }
+
         function confirmDelete() {
             return confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟');
         }
 
-        function confirmEdit() {
-            return confirm("هل أنت متأكد أنك تريد تعديل البيانات؟");
+        function copyToClipboard(url) {
+            // استخدام API لنسخ النص إلى الحافظة
+            navigator.clipboard.writeText(url).then(function() {
+                alert("تم نسخ الرابط إلى الحافظة!");
+            }).catch(function(error) {
+                alert("حدث خطأ أثناء نسخ الرابط: " + error);
+            });
         }
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');

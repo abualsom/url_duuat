@@ -25,6 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['got_home'])) {
     }
 }
 
+$translations = [
+    "lider" => "المدير",
+    "admin" => "مشرف",
+    "user" => "مستخدم"
+];
 
 if (isset($_POST['edit_profile'])) {
     header("Location: edit_profile.php");
@@ -85,14 +90,6 @@ $conn->close();
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .edit-button {
-            background-color: #2c3e50;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            border: none;
-            transition: background-color 0.2s;
-        }
 
         .edit-button:hover {
             background-color: #34495e;
@@ -145,6 +142,14 @@ $conn->close();
             display: inline-block;
             /* لجعل العنصر مثل الزر */
         }
+
+        @media (max-width: 576px) {
+            .edit-button {
+
+                margin-bottom: 5%;
+            }
+
+        }
     </style>
 </head>
 
@@ -181,6 +186,13 @@ $conn->close();
                             <p class="h5 mb-0 pe-7"><?php echo $sql_query['user_number']; ?></p>
                         </div>
 
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i data-lucide="building" class="icon"></i>
+                                الصلاحية
+                            </div>
+                            <p class="h5 mb-0 pe-7"><?php echo  $translations[$sql_query['role']]; ?></p>
+                        </div>
 
                         <div class="info-card">
                             <div class="info-label">

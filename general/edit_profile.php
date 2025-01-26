@@ -15,6 +15,12 @@ $update_query = "SELECT * FROM users WHERE id = $update_id";
 $select_datas = mysqli_query($conn, $update_query);
 $data_select = mysqli_fetch_array($select_datas);
 
+$translations = [
+    "lider" => "المدير",
+    "admin" => "مشرف",
+    "user" => "مستخدم"
+];
+
 if (isset($_POST['edit_profile'])) {
     if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
         $user_name = $_POST['user_name'];
@@ -147,9 +153,18 @@ $conn->close();
                                     <i data-lucide="building" class="icon"></i>
                                     رقمك في المؤسسة
                                 </div>
-                                <input class="form-control" type="text" name="user_number" value="<?php echo $data_select['user_number'];?> (ملاحظة: لا يمكنك تعديل رقمك؛ لأن ذلك يسبب أخطاء في الموقع)"  readonly>
+                                <input class="form-control" type="text" disabled name="user_number" value="<?php echo $data_select['user_number'];?> (ملاحظة: لا يمكنك تعديل رقمك؛ لأن ذلك يسبب أخطاء في الموقع)"  readonly>
                             </div>
 
+                            <div class="info-card">
+                                <div class="info-label">
+                                    <i data-lucide="building" class="icon"></i>
+                                    الصلاحية
+                                </div>
+                                <input class="form-control" type="text" disabled name="user_type" value="<?php 
+                                
+                                echo $translations[$data_select['role']];?> (ملاحظة: لا يمكنك تعديل صلاحيتك من هذه الصفحة)"  readonly>
+                            </div>
 
                             <div class="info-card">
                                 <div class="info-label">
