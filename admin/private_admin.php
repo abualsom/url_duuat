@@ -116,7 +116,7 @@ $conn->close();
             <div class="container my-1">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <input class="form-control me-5" type="search" placeholder="أدخل كلمة البحث" aria-label="بحث">
+                        <input class="form-control me-5" name="search" type="search" placeholder="أدخل كلمة البحث" aria-label="بحث">
                         <button class="btn btn-outline-success" style="color: #ae2754; border-color: #cf0c0c; margin-right: 10px; " type="submit">
                             بحث
                         </button>
